@@ -21,8 +21,8 @@ export default function Popup({ popupId, setPopupId }) {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm bg-opacity-50">
       <div className="relative bg-gray-800 w-[50vw] h-[40vh] text-white p-6 rounded shadow-lg ">
-        <h2 className="text-lg font-bold mb-4">{item.name}</h2>
-        <p className="text-sm whitespace-pre-wrap">
+        <h2 className="text-xl font-bold mb-4">{item.name}</h2>
+        <p className="whitespace-pre-wrap">
           {item.detail.replace(/\\n/g, "\n")}
         </p>
         <button
