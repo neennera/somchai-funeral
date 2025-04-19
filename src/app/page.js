@@ -16,17 +16,19 @@ export default function Home() {
 
   return (
     <div
-      className="relative h-screen w-screen bg-gradient-to-b from-black via-gray-800 to-black text-white"
+      className="h-full w-full text-white overflow-hidden"
     >
+      <div className="absolute -z-30 bg-gradient-to-b from-black via-gray-800 to-black w-screen h-screen"></div>
       {/* Static Top Left */}
-      <div className="absolute top-1 left-4 font-bold text-lg">
+      <div className="absolute top-4 left-4 font-bold text-lg">
         งานศพของสมชาย
       </div>
 
       {/* Static Top Right */}
-      <div className="absolute top-1 right-4">
+      <div className="absolute top-4 right-4">
         <a
           href="https://github.com/neennera/somchai-funeral"
+          target="_blank"
           className="text-gray-400 hover:text-gray-200"
         >
           โค้ดของโปรเจค
@@ -50,7 +52,7 @@ export default function Home() {
       {popupId !== -1 && <Popup popupId={popupId} setPopupId={setPopupId} />}
 
       {/* Footer */}
-      <footer className="absolute bottom-1 w-full text-center text-sm italic">
+      <footer className="absolute bottom-4 w-full text-center text-sm italic">
         <p>โลงศพเป็นมากกว่าเครื่องบรรจุร่าง มันคือสิ่งที่สะท้อนตัวตนของผู้ที่อยู่ข้างใน</p>
         <p>
           นี่คือโปรเจค Web 3D ที่จำลองบรรยากาศงานศพ เพื่อให้เราได้ระลึกถึงและเข้าใจชีวิตของสมชายในแบบที่เขาเป็น
