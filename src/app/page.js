@@ -16,7 +16,7 @@ export default function Home() {
 
   return (
     <div
-      className="h-full w-full text-white overflow-hidden"
+      className="h-full w-full text-white overflow-hidden "
     >
       <div className="absolute -z-30 bg-gradient-to-b from-black via-gray-800 to-black w-screen h-screen"></div>
       {/* Static Top Left */}

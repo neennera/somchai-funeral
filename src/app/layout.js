@@ -1,14 +1,11 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Sarabun } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const sarabun = Sarabun({
+  variable: "--font-thai",
+  subsets: ["thai"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800"],// Optional: Specify weights
 });
 
 export const metadata = {
@@ -16,11 +13,12 @@ export const metadata = {
   description: "เว็บ 3D งานศพที่แฝงไปด้วยความทรงจำของสมชาย",
 };
 
+
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="th">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${sarabun.variable} antialiased`}
       >
         {children}
       </body>
