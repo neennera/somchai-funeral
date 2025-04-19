@@ -2,7 +2,7 @@
 import * as THREE from "three";
 import { useEffect, useRef } from "react";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import { parseAppSegmentConfig } from "next/dist/build/segment-config/app/app-segment-config";
+import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 
 export default function TestThreeScene({setPopupId}) {
   const containerRef = useRef(null);
