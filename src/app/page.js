@@ -1,102 +1,60 @@
-import Image from "next/image";
+"use client"
+import { useState } from "react";
+import Popup from "@/components/Popup";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [popupId, setPopupId] = useState(-1);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  const items = [
+    "ภาพหน้าโลง",
+    "กีตาร์โปร่งตัวเก่า",
+    "หม้อแกงเขียวหวาน",
+    "ต้นโพธิ์เล็กในกระถาง",
+    "สมุดบันทึกเก่า",
+    "กล่องรับบริจาค",
+  ];
+
+  return (
+    <div
+      className="relative h-screen w-screen bg-gradient-to-b from-black via-gray-800 to-black text-white"
+    >
+      {/* Static Top Left */}
+      <div className="absolute top-1 left-4 font-bold text-lg">
+        งานศพของสมชาย
+      </div>
+
+      {/* Static Top Right */}
+      <div className="absolute top-1 right-4">
+        <a
+          href="https://github.com/neennera/somchai-funeral"
+          className="text-gray-400 hover:text-gray-200"
+        >
+          โค้ดของโปรเจค
+        </a>
+      </div>
+
+      {/* Buttons */}
+      <div className="w-[80%] grid grid-cols-3 gap-4 justify-center items-center mt-20">
+        {items.map((item, index) => (
+          <button
+            key={index}
+            className="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded hover:scale-110 hover:cursor-pointer transition-all"
+            onClick={() => setPopupId(popupId === index ? -1 : index)}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+            {item}
+          </button>
+        ))}
+      </div>
+
+      {/* Popup */}
+      {popupId !== -1 && <Popup popupId={popupId} setPopupId={setPopupId} />}
+
+      {/* Footer */}
+      <footer className="absolute bottom-1 w-full text-center text-sm italic">
+        <p>โลงศพเป็นมากกว่าเครื่องบรรจุร่าง มันคือสิ่งที่สะท้อนตัวตนของผู้ที่อยู่ข้างใน</p>
+        <p>
+          นี่คือโปรเจค Web 3D ที่จำลองบรรยากาศงานศพ เพื่อให้เราได้ระลึกถึงและเข้าใจชีวิตของสมชายในแบบที่เขาเป็น
+        </p>
       </footer>
     </div>
   );
