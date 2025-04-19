@@ -36,7 +36,7 @@ export default function TestThreeScene({setPopupId}) {
       1000
     );
     const controls = new OrbitControls(camera, renderer.domElement);
-    camera.position.set(-5, 5, 12);
+    camera.position.set(-5, 5, 10);
     camera.layers.enable(1);
     controls.target.set(-1, 2, 0);
     controls.update();
@@ -50,9 +50,7 @@ export default function TestThreeScene({setPopupId}) {
 
     // Add objects to the scene
     const floorGeometry = new THREE.PlaneGeometry(30, 20);
-    const boxGeometry = new THREE.BoxGeometry(2, 2, 2);
-    const cylinderGeometry = new THREE.CylinderGeometry(0.5, 0.5, 2);
-    const material = new THREE.MeshLambertMaterial();
+
 
     const floorMesh = new THREE.Mesh(
       floorGeometry,
@@ -73,17 +71,30 @@ export default function TestThreeScene({setPopupId}) {
       return mesh;
     }
 
-    const cylinders = new THREE.Group();
-    cylinders.add(createMesh(cylinderGeometry, material, 3, 1, 0, "1", 0));
-    cylinders.add(createMesh(cylinderGeometry, material, 4.2, 1, 0, "2", 0));
-    cylinders.add(createMesh(cylinderGeometry, material, 3.6, 3, 0, "3", 0));
-    scene.add(cylinders);
+    function addObjectToSceens(obj, name, colorChoice, x, y, z, rx = 0, ry = 0, rz = 0, sx = 1, sy = 1, sz = 1) {
+      console.log(colorChoice);
+      obj.name = name;
+      obj.position.set(x, y, z); 
+      obj.rotation.set(rx, ry, rz);
+      obj.scale.set(sx, sy, sz);
+      const brownMaterial = new THREE.MeshLambertMaterial({ color : parseInt(colorChoice, 16) });
+      obj.traverse((child) => {
+        if (child.isMesh) {
+          child.material = brownMaterial; 
+          child.name = name; 
+        }
+      });
+      scene.add(obj); 
+    }
 
-    const boxes = new THREE.Group();
-    boxes.add(createMesh(boxGeometry, material, -1, 1, 0, "4", 0));
-    boxes.add(createMesh(boxGeometry, material, -4, 1, 0, "5", 0));
-    boxes.add(createMesh(boxGeometry, material, -2.5, 3, 0, "6", 0));
-    scene.add(boxes);
+    // import objects
+    const loader = new OBJLoader().setPath('/models/');
+    loader.load('coffin.obj', (obj) => { addObjectToSceens(obj, "1", "0x8B4513",0, 0, 0)})
+    loader.load('guitar.obj', (obj) => { addObjectToSceens(obj, "2", "0xb07768",-3.5, -0.2, 2.3,150,0,0,4,4,4)})
+    loader.load('money.obj', (obj) => { addObjectToSceens(obj, "5", "0xb75fd4",3.7, 0.9, 1, 0,5,0,2, 2, 2)})
+    loader.load('noodle.obj', (obj) => { addObjectToSceens(obj, "3", "0x9619e",0, 1, 0,0,0,0,0.8,0.8,0.8)})
+    loader.load('plant.obj', (obj) => { addObjectToSceens(obj, "4", "0x499e6e",5, 0, 1)})
+
 
     // Raycaster for click -------------
     const raycaster = new THREE.Raycaster();
@@ -101,8 +112,6 @@ export default function TestThreeScene({setPopupId}) {
       const intersections = raycaster.intersectObjects(scene.children, true);
       if (intersections.length > 0) {
         const selectedObject = intersections[0].object;
-        // const color = new THREE.Color(Math.random(), Math.random(), Math.random());
-        // selectedObject.material.color = color;
         console.log(`${selectedObject.name} was clicked!`);
         setPopupId(parseInt(selectedObject.name))
       }

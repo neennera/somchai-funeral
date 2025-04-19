@@ -16,7 +16,9 @@ export default function Popup({ popupId, setPopupId }) {
 
   if (popupId === -1 || itemsInfo.length === 0) return null;
 
-  const item = itemsInfo[popupId];
+  const item = itemsInfo[popupId-1];
+
+  if(!item)return null;
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm bg-opacity-50">
