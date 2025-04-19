@@ -36,7 +36,7 @@ export default function Home() {
       </div>
 
       {/* Buttons */}
-      <div className="w-[80%] grid grid-cols-3 gap-4 justify-center items-center mt-20">
+      <div className="w-full h-[75vh] grid grid-cols-3 gap-4 justify-center items-center mt-20">
         {items.map((item, index) => (
           <button
             key={index}
@@ -52,7 +52,7 @@ export default function Home() {
       {popupId !== -1 && <Popup popupId={popupId} setPopupId={setPopupId} />}
 
       {/* Footer */}
-      <footer className="absolute bottom-4 w-full text-center text-sm italic">
+      <footer className="absolute bottom-4 w-full text-center italic">
         <p>โลงศพเป็นมากกว่าเครื่องบรรจุร่าง มันคือสิ่งที่สะท้อนตัวตนของผู้ที่อยู่ข้างใน</p>
         <p>
           นี่คือโปรเจค Web 3D ที่จำลองบรรยากาศงานศพ เพื่อให้เราได้ระลึกถึงและเข้าใจชีวิตของสมชายในแบบที่เขาเป็น
