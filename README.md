@@ -1,6 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# งานศพของสมชาย (Somchai's Funeral)
 
-## Getting Started
+A 3D web experience that honors the life of Somchai through meaningful objects and cultural storytelling.
+
+---
+
+## 🌐 Production Link
+[https://somchai-funeral.vercel.app/](https://somchai-funeral.vercel.app/)
+
+---
+
+## 📖 Features
+- **Interactive 3D Scene**: Explore objects like a coffin, guitar, noodle bowl, piggy bank, and plant, each with its own story.
+- **Popup Information**: Click on objects to view detailed descriptions.
+- **Credits Popup**: A dedicated popup to credit contributors and resources.
+- **Loading State**: Displays a loading message while 3D models are being fetched.
+- **Responsive Design**: Optimized for various screen sizes using Tailwind CSS.
+
+---
+
+## 🛠️ Technologies Used
+- **Three.js**: For rendering the 3D scene and objects.
+- **React**: For building the user interface.
+- **Next.js**: For server-side rendering and routing.
+- **Tailwind CSS**: For styling and responsive design.
+- **Vercel**: For deployment.
+
+---
+
+## 🎨 Credits
+- **Tutorial**: [Credit Tutorial](https://youtu.be/QATefHrO4kg?si=URVfHgrz7c-Iauhx)
+- **3D Models** (from [CGTrader](https://www.cgtrader.com/)):
+  - Coffin - nicmacanimations
+  - Guitar - Yoshikitaima
+  - Noodle - elle-ly
+  - Piggy Bank - Sanyi3D
+  - Plant - diego-michelsbueno
+
+---
+
+# 📜 How to Run Locally
 
 First, run the development server:
 
@@ -18,7 +56,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
 ## Learn More
 
@@ -28,6 +66,8 @@ To learn more about Next.js, take a look at the following resources:
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+---
 
 ## Deploy on Vercel
 

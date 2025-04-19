@@ -19,7 +19,7 @@ export default function Home() {
       </div>
 
       {/* Static Top Right */}
-      <div className="absolute top-4 right-4 space-x-2">
+      <div className="absolute z-50 top-4 right-4 space-x-2">
         <a
           href="https://github.com/neennera/somchai-funeral"
           target="_blank"
