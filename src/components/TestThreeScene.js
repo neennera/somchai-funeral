@@ -1,10 +1,11 @@
 "use client";
 import * as THREE from "three";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 
-export default function TestThreeScene({setPopupId}) {
+export default function TestThreeScene({ setPopupId }) {
+  const [loading, setLoading] = useState(true);
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -94,7 +95,7 @@ export default function TestThreeScene({setPopupId}) {
     loader.load('money.obj', (obj) => { addObjectToSceens(obj, "5", "0xb75fd4",3.7, 0.9, 1, 0,5,0,2, 2, 2)})
     loader.load('noodle.obj', (obj) => { addObjectToSceens(obj, "3", "0x9619e",0, 1, 0,0,0,0,0.8,0.8,0.8)})
     loader.load('plant.obj', (obj) => { addObjectToSceens(obj, "4", "0x499e6e",5, 0, 1)})
-
+    setLoading(false);
 
     // Raycaster for click -------------
     const raycaster = new THREE.Raycaster();
@@ -127,5 +128,19 @@ export default function TestThreeScene({setPopupId}) {
     };
   }, []);
 
-  return <div ref={containerRef} className="w-full h-full overflow-hidden"></div>;
+   
+    return (
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
+        {
+          loading &&
+          <div className="w-full h-full flex items-center justify-center flex-col space-y-2">
+              <p>กำลังใช้เวลาโหลดภาพ...</p>
+              <p>อาจจะใช้เวลานานราวหนึ่งนาที เนื่องจาก deploy บนเซิร์ฟฟรีที่มีลิมิต</p>
+              <div className="mt-5 w-5 h-5 rounded-full bg-white animate-bounce"></div>
+          </div>
+        }
+        <div ref={containerRef} className="w-full h-full overflow-hidden"></div>
+      </div>
+    );
+ 
 }

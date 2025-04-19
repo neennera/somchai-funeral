@@ -2,18 +2,11 @@
 import { useState } from "react";
 import TestThreeScene from "@/components/TestThreeScene";
 import Popup from "@/components/Popup";
+import CreditPopup from "@/components/CreditPopup";
 
 export default function Home() {
   const [popupId, setPopupId] = useState(-1);
-
-  const items = [
-    "ภาพหน้าโลง",
-    "กีตาร์โปร่งตัวเก่า",
-    "หม้อแกงเขียวหวาน",
-    "ต้นโพธิ์เล็กในกระถาง",
-    "สมุดบันทึกเก่า",
-    "กล่องรับบริจาค",
-  ];
+  const [showCredit, setShowCredit] = useState(false);
 
   return (
     <div
@@ -26,7 +19,7 @@ export default function Home() {
       </div>
 
       {/* Static Top Right */}
-      <div className="absolute top-4 right-4">
+      <div className="absolute top-4 right-4 space-x-2">
         <a
           href="https://github.com/neennera/somchai-funeral"
           target="_blank"
@@ -34,27 +27,23 @@ export default function Home() {
         >
           โค้ดของโปรเจค
         </a>
+        <button
+          className="text-gray-400 hover:text-gray-200 cursor-pointer"
+          onClick={() => setShowCredit(true)} // Show the credit popup
+        >
+          เครดิต
+        </button>
       </div>
 
       {/* Screen */}
       <div className="w-full h-full overflow-hidden">
         <TestThreeScene setPopupId={setPopupId} />
       </div>
-      {/* Buttons */}
-      {/* <div className="w-[95%] h-[75vh] grid grid-cols-3 gap-4 justify-center items-center mt-20">
-        {items.map((item, index) => (
-          <button
-            key={index}
-            className="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded hover:scale-110 hover:cursor-pointer transition-all"
-            onClick={() => setPopupId(popupId === index ? -1 : index)}
-          >
-            {item}
-          </button>
-        ))}
-      </div> */}
 
       {/* Popup */}
       {popupId !== -1 && <Popup popupId={popupId} setPopupId={setPopupId} />}
+      {showCredit && <CreditPopup onClose={() => setShowCredit(false)} />} {/* Show CreditPopup */}
+
 
       {/* Footer */}
       <footer className="absolute bottom-4 w-full text-center italic">
