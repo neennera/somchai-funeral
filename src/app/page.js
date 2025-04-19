@@ -1,5 +1,6 @@
 "use client"
 import { useState } from "react";
+import TestThreeScene from "@/components/TestThreeScene";
 import Popup from "@/components/Popup";
 
 export default function Home() {
@@ -35,8 +36,12 @@ export default function Home() {
         </a>
       </div>
 
+      {/* Screen */}
+      <div className="w-full h-full overflow-hidden">
+        <TestThreeScene setPopupId={setPopupId} />
+      </div>
       {/* Buttons */}
-      <div className="w-full h-[75vh] grid grid-cols-3 gap-4 justify-center items-center mt-20">
+      {/* <div className="w-[95%] h-[75vh] grid grid-cols-3 gap-4 justify-center items-center mt-20">
         {items.map((item, index) => (
           <button
             key={index}
@@ -46,7 +51,7 @@ export default function Home() {
             {item}
           </button>
         ))}
-      </div>
+      </div> */}
 
       {/* Popup */}
       {popupId !== -1 && <Popup popupId={popupId} setPopupId={setPopupId} />}
