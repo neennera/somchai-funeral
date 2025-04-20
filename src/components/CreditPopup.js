@@ -1,8 +1,10 @@
 export default function CreditPopup({ onClose }) {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm bg-opacity-50">
-        <div className="relative bg-gray-800 w-[50vw] h-auto text-white p-6 rounded shadow-lg">
-          <h2 className="text-xl font-bold mb-4">เครดิต</h2>
+       <div
+        className="relative bg-gray-800 text-white p-6 rounded shadow-lg 
+                   w-[90vw] h-[70vh] sm:w-[50vw] sm:h-[40vh] overflow-y-auto"
+      >   <h2 className="text-xl font-bold mb-4">เครดิต</h2>
           <p className="mb-2">
             Credit Tutorial:{" "}
             <a
