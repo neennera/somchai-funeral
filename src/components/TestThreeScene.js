@@ -3,6 +3,8 @@ import * as THREE from "three";
 import { useEffect, useRef, useState } from "react";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
+import { MTLLoader } from "three/addons/loaders/MTLLoader.js";
+import { FBXLoader } from "three/addons/loaders/FBXLoader.js";
 
 export default function TestThreeScene({ setPopupId }) {
   const [loading, setLoading] = useState(true);
@@ -21,13 +23,18 @@ export default function TestThreeScene({ setPopupId }) {
     // Create a new scene
     const scene = new THREE.Scene();
 
-    // Setup scene lighting
-    const light = new THREE.DirectionalLight(0xfff8e3,0.5);
+    // Setup scene lighting ---------------------
+    const light = new THREE.DirectionalLight(0xffffff,0.5);
     light.intensity = 2;
     light.position.set(2, 5, 10);
     light.castShadow = true;
     scene.add(light);
     scene.add(new THREE.AmbientLight(0x8f7553, 0.5));
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5); // Soft light
+    scene.add(ambientLight);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    directionalLight.position.set(5, 10, 7.5);
+    scene.add(directionalLight);
 
     // Setup camera
     const camera = new THREE.PerspectiveCamera(
@@ -37,9 +44,9 @@ export default function TestThreeScene({ setPopupId }) {
       1000
     );
     const controls = new OrbitControls(camera, renderer.domElement);
-    camera.position.set(-5, 5, 10);
+    camera.position.set(0, 5, 10);
     camera.layers.enable(1);
-    controls.target.set(-1, 2, 0);
+    controls.target.set(0, 0, 0);
     controls.update();
 
     // Render loop --- update render image
@@ -50,9 +57,9 @@ export default function TestThreeScene({ setPopupId }) {
     }
 
     // Add objects to the scene
+
+    // Floor ----
     const floorGeometry = new THREE.PlaneGeometry(30, 20);
-
-
     const floorMesh = new THREE.Mesh(
       floorGeometry,
       new THREE.MeshLambertMaterial({ color: 0x343336 })
@@ -62,39 +69,72 @@ export default function TestThreeScene({ setPopupId }) {
     floorMesh.receiveShadow = true;
     scene.add(floorMesh);
 
-    function createMesh(geometry, material, x, y, z, name, layer) {
-      const mesh = new THREE.Mesh(geometry, material.clone());
-      mesh.position.set(x, y, z);
-      mesh.name = name;
-      mesh.castShadow = true;
-      mesh.receiveShadow = true;
-      mesh.layers.set(layer);
-      return mesh;
-    }
-
-    function addObjectToSceens(obj, name, colorChoice, x, y, z, rx = 0, ry = 0, rz = 0, sx = 1, sy = 1, sz = 1) {
-      console.log(colorChoice);
+    const mtlLoader = new MTLLoader().setPath('/models/');
+    function addObjectToSceen(obj, name, x, y, z, rx = 0, ry = 0, rz = 0, sx = 1, sy = 1, sz = 1) {
       obj.name = name;
       obj.position.set(x, y, z); 
       obj.rotation.set(rx, ry, rz);
       obj.scale.set(sx, sy, sz);
-      const brownMaterial = new THREE.MeshLambertMaterial({ color : parseInt(colorChoice, 16) });
       obj.traverse((child) => {
         if (child.isMesh) {
-          child.material = brownMaterial; 
-          child.name = name; 
+          child.castShadow = true;
+            child.receiveShadow = true;
+          child.name = name;
         }
       });
       scene.add(obj); 
     }
 
-    // import objects
-    const loader = new OBJLoader().setPath('/models/');
-    loader.load('coffin.obj', (obj) => { addObjectToSceens(obj, "1", "0x8B4513",0, 0, 0)})
-    loader.load('guitar.obj', (obj) => { addObjectToSceens(obj, "2", "0xb07768",-3.5, -0.2, 2.3,150,0,0,4,4,4)})
-    loader.load('money.obj', (obj) => { addObjectToSceens(obj, "5", "0xb75fd4",3.7, 0.9, 1, 0,5,0,2, 2, 2)})
-    loader.load('noodle.obj', (obj) => { addObjectToSceens(obj, "3", "0x9619e",0, 1, 0,0,0,0,0.8,0.8,0.8)})
-    loader.load('plant.obj', (obj) => { addObjectToSceens(obj, "4", "0x499e6e",5, 0, 1)})
+    // import objects with mtl
+    mtlLoader.load('coffin.mtl', (materials) => {
+      materials.preload();
+      const coffinLoader = new OBJLoader().setMaterials(materials).setPath('/models/');
+      coffinLoader.load('coffin.obj', (obj) => {
+        addObjectToSceen(obj, "1", 0, 0, 0);
+      });
+    });
+    
+    mtlLoader.load('guitar.mtl', (materials) => {
+      materials.preload();
+      const guitarLoader = new OBJLoader().setMaterials(materials).setPath('/models/');
+      guitarLoader.load('guitar.obj', (obj) => {
+        addObjectToSceen(obj, "2", -3.5, -0.2, 2.3, 150, 0, 0, 4, 4, 4);
+      });
+    });
+    
+    mtlLoader.load('money.mtl', (materials) => {
+      materials.preload();
+      const moneyLoader = new OBJLoader().setMaterials(materials).setPath('/models/');
+      moneyLoader.load('money.obj', (obj) => {
+        addObjectToSceen(obj, "5", 3.7, 0.9, 1, 0, 5, 0, 2, 2, 2);
+      });
+    });
+
+
+    // import object with fbx
+    function addFBXToScene(filePath, name, x, y, z, rx = 0, ry = 0, rz = 0, sx = 1, sy = 1, sz = 1, defaultColor = 0xffffff) {
+      const fbxLoader = new FBXLoader();
+      fbxLoader.load(filePath, (fbx) => {
+        fbx.name = name;
+        fbx.position.set(x, y, z);
+        fbx.rotation.set(rx, ry, rz);
+        fbx.scale.set(sx, sy, sz);
+        fbx.traverse((child) => {
+          if (child.isMesh) {
+            
+            child.castShadow = true;
+            child.receiveShadow = true;
+            if (!child.material.map) {
+              child.material = new THREE.MeshLambertMaterial({ color: defaultColor }); 
+            }
+            child.name = name;
+          }
+        });
+        scene.add(fbx);
+      });
+    }
+    addFBXToScene("/models/plant.fbx", "4", 5, 0, 1,0,0,0,0.002,0.002,0.002,0x499e6e);
+    addFBXToScene("/models/noodle.fbx", "3",0, 1, 0,0,0,0,0.007,0.007,0.007,0xffffff);
     setLoading(false);
 
     // Raycaster for click -------------
